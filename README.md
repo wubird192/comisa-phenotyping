@@ -1,14 +1,14 @@
 # COMISA Phenotyping Study — Analysis Pipeline
 
-**Muroi K, et al.** "Phenotypic Heterogeneity in Comorbid Insomnia and Sleep Apnoea: A Machine Learning Analysis of Real-World Sleep Clinic Data"  
-*Target: The Lancet Digital Health*  
+**Muroi K, et al.** "Phenotypic Heterogeneity in Comorbid Insomnia and Sleep Apnea: A Machine Learning Analysis of Real-World Sleep Clinic Data"  
+*Target: npj Digital Medicine*  
 Registry: [jRCT1030250339](https://jrct.niph.go.jp/en-latest-detail/jRCT1030250339)
 
 ---
 
 ## Overview
 
-This repository contains the complete R analysis pipeline for a retrospective multi-centre cohort study identifying phenotypes of comorbid insomnia and sleep apnoea (COMISA) using unsupervised machine learning (UMAP + hierarchical clustering) applied to real-world sleep clinic data (N = 599).
+This repository contains the complete R analysis pipeline for a retrospective multi-center cohort study identifying phenotypes of comorbid insomnia and sleep apnea (COMISA) using unsupervised machine learning (UMAP + hierarchical clustering) applied to real-world sleep clinic data (N = 599).
 
 **Key finding:** 84.8% (95% CI 72.6–92.5%) of COMISA patients (AHI ≥ 15 + insomnia diagnosis) clustered with an insomnia-predominant phenotype characterised by elevated dysfunctional beliefs, sleep reactivity, and hyperarousal.
 
@@ -83,7 +83,7 @@ source("07_tables.R")      # ~1 min
 
 ## Data
 
-The raw data file (`comisa.csv`) contains de-identified records from Mates Sleep Clinic (two sites, Gifu, Japan), collected April 2010–December 2024. Data are not publicly shared due to patient privacy; requests may be directed to the corresponding author.
+The raw data file (`comisa.csv`) contains de-identified records from Mates Sleep Clinic (three sites, Gifu, Japan), collected April 2010–December 2024. Data are not publicly shared due to patient privacy; requests may be directed to the corresponding author.
 
 The file is UTF-8 BOM encoded and includes the following key columns:
 
@@ -156,13 +156,13 @@ All outputs are saved to `OUTPUT_DIR` (flat structure):
 
 - IRB approval: R06-258 (University of Tsukuba Hospital)
 - Trial registry: jRCT1030250339 (retrospectively registered)
-- Study design: retrospective multi-centre cohort, opt-out consent
+- Study design: retrospective multi-center cohort, opt-out consent
 
 ---
 
 ## Citation
 
-> Muroi K, et al. Phenotypic Heterogeneity in Comorbid Insomnia and Sleep Apnoea: A Machine Learning Analysis of Real-World Sleep Clinic Data. *The Lancet Digital Health* (under review).
+> Muroi K, et al. Phenotypic Heterogeneity in Comorbid Insomnia and Sleep Apnea: A Machine Learning Analysis of Real-World Sleep Clinic Data. *npj Digital Medicine* (submitted).
 
 ---
 
