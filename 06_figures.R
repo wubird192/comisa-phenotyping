@@ -1,6 +1,6 @@
 # ============================================================
 # COMISA Phenotyping Study
-# 06_figures.R — Publication-ready figures for Lancet Digital Health
+# 06_figures.R — Publication-ready figures for npj Digital Medicine
 #
 #   Figure 1: UMAP phenotype projections (4-panel)
 #   Figure 2: ISI vs AHI scatter plot (with AHI = 15 primary line)
@@ -79,7 +79,7 @@ pA <- ggplot(umap_df, aes(UMAP1, UMAP2, color = Cluster)) +
   geom_point(size = 1.5, alpha = 0.6) +
   scale_color_manual(values = CLUSTER_COLORS[seq_len(n_clusters)],
                      name = "Cluster",
-                     labels = paste0("C", seq_len(n_clusters))) +
+                     labels = as.character(seq_len(n_clusters))) +
   labs(title = "A", x = "UMAP 1", y = "UMAP 2") +
   common_umap_theme
 
@@ -234,7 +234,7 @@ panel_list <- lapply(seq_along(key_vars), function(i) {
   pd   <- pd[complete.cases(pd), ]
   mn   <- data.frame(cluster = factor(seq_len(n_clusters)),
                      mean    = anova_res[[var]]$means[seq_len(n_clusters)])
-  plab <- if (anova_res[[var]]$anova_p < 0.001) "p<0·001"
+  plab <- if (anova_res[[var]]$anova_p < 0.001) "p<0.001"
           else sprintf("p=%.3f", anova_res[[var]]$anova_p)
 
   ggplot(pd, aes(cluster, value, fill = cluster)) +
