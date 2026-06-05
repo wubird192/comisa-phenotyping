@@ -2,10 +2,9 @@
 # COMISA Phenotyping Study
 # 01_setup.R — Package installation, loading, and global config
 #
-# Muroi K, et al. "Phenotypic Heterogeneity in Comorbid Insomnia
-# and Sleep Apnoea: A Machine Learning Analysis of Real-World
-# Sleep Clinic Data"
-# Target journal: The Lancet Digital Health
+# Muroi K, et al. "Phenotypic heterogeneity in comorbid insomnia and sleep apnea
+# identified by polysomnographic and psychological variables"
+# Target journal: npj Digital Medicine
 # ============================================================
 
 cat("\n============================================================\n")
