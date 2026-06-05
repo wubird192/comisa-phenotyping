@@ -2,10 +2,9 @@
 # COMISA Phenotyping Study
 # 00_run_all.R — Master pipeline
 #
-# Muroi K, et al. "Phenotypic Heterogeneity in Comorbid Insomnia
-# and Sleep Apnoea: A Machine Learning Analysis of Real-World
-# Sleep Clinic Data"
-# Target: The Lancet Digital Health
+# Muroi K, et al. "Phenotypic heterogeneity in comorbid insomnia and sleep apnea
+# identified by polysomnographic and psychological variables"
+# Target: npj Digital Medicine
 # Registry: jRCT1030250339
 #
 # ── Pipeline steps ────────────────────────────────────────────
