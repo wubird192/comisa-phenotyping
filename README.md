@@ -1,6 +1,6 @@
 # COMISA Phenotyping Study — Analysis Pipeline
 
-**Muroi K, et al.** "Phenotypic Heterogeneity in Comorbid Insomnia and Sleep Apnea: A Machine Learning Analysis of Real-World Sleep Clinic Data"  
+**Muroi K, et al.** "Phenotypic heterogeneity in comorbid insomnia and sleep apnea identified by polysomnographic and psychological variables"  
 *Target: npj Digital Medicine*  
 Registry: [jRCT1030250339](https://jrct.niph.go.jp/en-latest-detail/jRCT1030250339)
 
@@ -162,7 +162,7 @@ All outputs are saved to `OUTPUT_DIR` (flat structure):
 
 ## Citation
 
-> Muroi K, et al. Phenotypic Heterogeneity in Comorbid Insomnia and Sleep Apnea: A Machine Learning Analysis of Real-World Sleep Clinic Data. *npj Digital Medicine* (submitted).
+> Muroi K, et al. Phenotypic heterogeneity in comorbid insomnia and sleep apnea identified by polysomnographic and psychological variables. *npj Digital Medicine* (submitted).
 
 ---
 
