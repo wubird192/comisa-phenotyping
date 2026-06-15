@@ -4,7 +4,7 @@
 #
 # Muroi K, et al. "Phenotypic heterogeneity in comorbid insomnia and sleep apnea
 # identified by polysomnographic and psychological variables"
-# Target: npj Digital Medicine
+# Manuscript: see citation above
 # Registry: jRCT1030250339
 #
 # ── Pipeline steps ────────────────────────────────────────────
@@ -29,11 +29,11 @@
 #
 # ── Output files ──────────────────────────────────────────────
 #   Figures (PNG + TIFF, 300 DPI):
-#     Figure1_COMISA_Phenotypes_LDH
-#     Figure2_ISI_vs_AHI_Scatter_LDH
-#     Figure3_Clinical_Variables_LDH
-#     Figure4_ROC_Expert_Diagnosis_FINAL
-#     FigureS2_Clinical_Heatmap_LDH
+#     Figure1_COMISA_Phenotypes
+#     Figure2_ISI_vs_AHI_Scatter
+#     Figure3_Clinical_Variables
+#     Figure4_ROC_Expert_Diagnosis
+#     FigureS2_Clinical_Heatmap
 #     FigureS_Consensus_Matrix
 #     FigureS_ARI_Distribution
 #     FigureS_Jaccard_by_Cluster

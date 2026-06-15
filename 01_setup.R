@@ -4,7 +4,7 @@
 #
 # Muroi K, et al. "Phenotypic heterogeneity in comorbid insomnia and sleep apnea
 # identified by polysomnographic and psychological variables"
-# Target journal: npj Digital Medicine
+# Manuscript: see citation above
 # ============================================================
 
 cat("\n============================================================\n")
@@ -17,10 +17,10 @@ cat("============================================================\n\n")
 # ============================================================
 
 # Path to raw data CSV (UTF-8 BOM encoded)
-DATA_PATH <- "/Users/muroikei/Desktop/IIIS/IIIS研究プロジェクト/睡眠COMISA/解析用フォルダ/comisa.csv"
+DATA_PATH <- "data/comisa.csv"
 
 # Working directory — all output files will be saved here
-OUTPUT_DIR <- "/Users/muroikei/Desktop/IIIS/IIIS研究プロジェクト/睡眠COMISA/解析用フォルダ/output"
+OUTPUT_DIR <- "output"
 
 # Random seeds
 SEED_MICE  <- 42
@@ -88,7 +88,7 @@ if (!dir.exists(OUTPUT_DIR)) {
   cat(sprintf("✓ Output directory: %s\n\n", OUTPUT_DIR))
 }
 
-# Colour palette (colour-blind safe; Lancet Digital Health style)
+# Colour palette (colour-blind safe)
 CLUSTER_COLORS <- c("1" = "#E69F00", "2" = "#56B4E9", "3" = "#009E73",
                     "4" = "#F0E442", "5" = "#0072B2", "6" = "#D55E00")
 

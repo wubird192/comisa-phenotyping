@@ -154,7 +154,7 @@ cat("✓ Table2_Cluster_Characteristics.csv saved\n\n")
 # ============================================================
 # SUPPLEMENTARY TABLE S2 — AHI threshold sensitivity analysis
 #   Compare COMISA defined by AHI >=15 vs AHI >=5
-#   Structure matches Supplementary_Materials_v8 exactly:
+#   Structure matches the manuscript supplementary materials:
 #   - mean (SD) for continuous; n (%) for categorical
 #   - t-test p-values; Cohen's d effect sizes
 #   - Sections: Sample/Cluster, Demographics, Insomnia Severity,

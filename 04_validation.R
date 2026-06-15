@@ -189,16 +189,16 @@ if (length(roc_results) >= 4) {
   }
 
   # PNG (preview)
-  png(file.path(OUTPUT_DIR, "Figure4_ROC_Expert_Diagnosis_FINAL.png"),
+  png(file.path(OUTPUT_DIR, "Figure4_ROC_Expert_Diagnosis.png"),
       width = 180, height = 140, units = "mm", res = 300)
   par(pty = "s", mar = c(5, 4, 4, 2))
   draw_fig4(0.70)
   dev.off()
 
-  # TIFF (Lancet submission, 300 DPI)
+  # TIFF (journal submission, 300 DPI)
   # macOS quartz device does not support LZW compression; use cairo on
   # Linux/Windows for LZW. On macOS the TIFF is saved uncompressed.
-  tiff_path <- file.path(OUTPUT_DIR, "Figure4_ROC_Expert_Diagnosis_FINAL.tiff")
+  tiff_path <- file.path(OUTPUT_DIR, "Figure4_ROC_Expert_Diagnosis.tiff")
   on_mac    <- Sys.info()[["sysname"]] == "Darwin"
   if (on_mac) {
     tiff(tiff_path, width = 180, height = 140, units = "mm", res = 300)
@@ -211,7 +211,7 @@ if (length(roc_results) >= 4) {
   dev.off()
   if (on_mac)
     cat("  Note: macOS — TIFF saved without LZW. Convert for submission if needed.\n")
-  cat("\u2713 Figure4_ROC_Expert_Diagnosis_FINAL.png / .tiff saved\n\n")
+  cat("\u2713 Figure4_ROC_Expert_Diagnosis.png / .tiff saved\n\n")
 }
 
 # ============================================================

@@ -1,7 +1,6 @@
 # COMISA Phenotyping Study — Analysis Pipeline
 
 **Muroi K, et al.** "Phenotypic heterogeneity in comorbid insomnia and sleep apnea identified by polysomnographic and psychological variables"  
-*Target: npj Digital Medicine*  
 Registry: [jRCT1030250339](https://jrct.niph.go.jp/en-latest-detail/jRCT1030250339)
 
 ---
@@ -137,12 +136,12 @@ The file is UTF-8 BOM encoded and includes the following key columns:
 All outputs are saved to `OUTPUT_DIR` (flat structure):
 
 **Figures** (PNG preview + TIFF 300 DPI for submission):
-- `Figure1_COMISA_Phenotypes_LDH` — UMAP projections (4-panel)
-- `Figure2_ISI_vs_AHI_Scatter_LDH` — ISI vs AHI scatter
-- `Figure3_Clinical_Variables_LDH` — Clinical boxplots (9-panel)
-- `Figure4_ROC_Expert_Diagnosis_FINAL` — ROC curves
+- `Figure1_COMISA_Phenotypes` — UMAP projections (4-panel)
+- `Figure2_ISI_vs_AHI_Scatter` — ISI vs AHI scatter
+- `Figure3_Clinical_Variables` — Clinical boxplots (9-panel)
+- `Figure4_ROC_Expert_Diagnosis` — ROC curves
 - `FigureS1_ROC_AHI_Threshold_Comparison` — Supplementary ROC: AHI ≥15 vs AHI ≥5
-- `FigureS2_Clinical_Heatmap_LDH` — Supplementary heatmap
+- `FigureS2_Clinical_Heatmap` — Supplementary heatmap
 
 **Tables** (CSV):
 - `Table1_Sample_Characteristics.csv`
@@ -162,7 +161,7 @@ All outputs are saved to `OUTPUT_DIR` (flat structure):
 
 ## Citation
 
-> Muroi K, et al. Phenotypic heterogeneity in comorbid insomnia and sleep apnea identified by polysomnographic and psychological variables. *npj Digital Medicine* (submitted).
+> Muroi K, et al. Phenotypic heterogeneity in comorbid insomnia and sleep apnea identified by polysomnographic and psychological variables. (manuscript under review).
 
 ---
 
