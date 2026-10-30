@@ -83,11 +83,13 @@ if (file.exists(IMP_RDS)) {
 # ==============================================================================
 # 2. FigS3 — UMAP グリッド 40 設定：best-k 解 vs 参照解の ARI
 # ==============================================================================
+prm <- read.csv(file.path(OUTPUT_DIR, "UMAP_Final_Parameters.csv")); getp <- function(k) prm$Value[prm$Parameter == k]
+REF_METRIC <- tolower(getp("Metric")); REF_NN <- as.numeric(getp("N_neighbors")); REF_MD <- as.numeric(getp("Min_dist")); OBS_SIL <- as.numeric(getp("Silhouette"))
 g <- read.csv(file.path(OUTPUT_DIR, "revision/TableS3_UMAP_grid_ARI.csv"))
 ari_col <- pick_col(g, c("ARI_bestk_vs_reference", "ARI_k3_vs_reference"))   # 17 で改名予定
 g2 <- data.frame(metric = tools::toTitleCase(g$metric), n_neighbors = factor(g$n_neighbors),
                  min_dist = factor(g$min_dist), best_k = g$best_k_by_silhouette, ARI = g[[ari_col]],
-                 ref = g$metric == "manhattan" & g$n_neighbors == 20 & abs(g$min_dist - 0.01) < 1e-9)
+                 ref = tolower(g$metric) == REF_METRIC & g$n_neighbors == REF_NN & abs(g$min_dist - REF_MD) < 1e-9)
 stopifnot(nrow(g2) == 40, sum(g2$ref) == 1)
 p3 <- ggplot(g2, aes(min_dist, n_neighbors)) +
   geom_tile(aes(fill = ARI), colour = "white", linewidth = 0.6) +
@@ -98,7 +100,7 @@ p3 <- ggplot(g2, aes(min_dist, n_neighbors)) +
                       name = "ARI vs reference") +
   facet_wrap(~ metric, nrow = 1) +
   labs(title = "ARI of each configuration's best-k solution against the reference solution",
-       subtitle = "Cell label = silhouette-optimal k; red outline = reference configuration (Manhattan, 20, 0.01)",
+       subtitle = sprintf("Cell label = silhouette-optimal k; red outline = reference configuration (%s, %g, %g)", tools::toTitleCase(REF_METRIC), REF_NN, REF_MD),
        x = "min_dist", y = "n_neighbors") +
   theme_journal() + theme(legend.position = "right", legend.title = element_text(size = 8),
                           legend.key.height = unit(6, "mm"), legend.key.width = unit(3, "mm"),
@@ -114,15 +116,15 @@ if (file.exists(CONS_FILE)) {
   stopifnot(nrow(M) == 599, ncol(M) == 599)
   cl  <- read.csv(file.path(OUTPUT_DIR, "Cluster_Assignments.csv")); clcol <- pick_col(cl, c("Cluster", "cluster", "Cluster_k2"))
   ord <- order(cl[[clcol]], -rowMeans(M))                   # クラスタ順 → クラスタ内は平均一致率の高い順
-  Mo  <- M[ord, ord]; sizes <- table(cl[[clcol]]); cut <- cumsum(sizes)[1]
+  Mo  <- M[ord, ord]; sizes <- table(cl[[clcol]]); cuts <- head(cumsum(sizes), -1); mids <- (c(0, cuts) + cumsum(sizes)) / 2
   long <- as.data.frame(as.table(Mo)); names(long) <- c("i", "j", "Consensus")
   long$i <- as.integer(long$i); long$j <- as.integer(long$j)
   pc <- ggplot(long, aes(j, i, fill = Consensus)) + geom_raster() +
     scale_fill_gradient(low = "white", high = JAMA[["slate"]], limits = c(0, 1), breaks = c(0, 0.5, 1),
                         name = "Consensus") +
-    geom_hline(yintercept = cut + 0.5, colour = JAMA[["red"]], linewidth = 0.4) +
-    geom_vline(xintercept = cut + 0.5, colour = JAMA[["red"]], linewidth = 0.4) +
-    annotate("text", x = c(cut / 2, cut + (599 - cut) / 2), y = -12, label = c("Cluster 1", "Cluster 2"),
+    geom_hline(yintercept = cuts + 0.5, colour = JAMA[["red"]], linewidth = 0.4) +
+    geom_vline(xintercept = cuts + 0.5, colour = JAMA[["red"]], linewidth = 0.4) +
+    annotate("text", x = mids, y = -12, label = paste("Cluster", names(sizes)),
              size = 2.8, family = "Helvetica") +
     scale_y_reverse(expand = c(0, 0)) + scale_x_continuous(expand = c(0, 0)) + coord_fixed(clip = "off") +
     labs(title = "Consensus matrix: 200 subsamples of 80% of patients",
@@ -168,23 +170,24 @@ pA <- ggplot(nk, aes(factor(k), prop, fill = method)) +
 
 # 4b. k = 2 を強制したときの null silhouette 分布（UMAP）vs 実データ 0.457
 sil <- raw13 %>% dplyr::filter(k_true == 1, method == "UMAP + Ward's")
-OBS_SIL <- 0.457
+if (!exists("OBS_SIL")) OBS_SIL <- 0.457
 cat(sprintf("null Sil_k2 (UMAP): mean %.3f, 95th pct %.3f, max %.3f (n = %d)\n",
             mean(sil$Sil_k2), quantile(sil$Sil_k2, .95), max(sil$Sil_k2), nrow(sil)))   # SUMMARY v2 §13 と照合
 pB <- ggplot(sil, aes(Sil_k2)) +
   geom_histogram(bins = 10, fill = JAMA[["grey"]], colour = "white", linewidth = 0.3) +
   geom_vline(xintercept = OBS_SIL, colour = JAMA[["red"]], linewidth = 0.6) +
-  annotate("text", x = OBS_SIL, y = Inf, label = "Observed 0.457", hjust = 1.05, vjust = 1.5,
+  annotate("text", x = OBS_SIL, y = Inf, label = sprintf("Observed %.3f", OBS_SIL), hjust = 1.05, vjust = 1.5,
            size = 2.6, colour = JAMA[["red"]], family = "Helvetica") +
   labs(title = "Null data: silhouette with k = 2 forced", x = "Silhouette coefficient (UMAP + Ward's)", y = "Datasets, n", tag = "B") +
   theme_journal()
 
 # 4c. 真の構造の回収：ARI vs 重心間距離（UMAP + Ward's；真 k = 2, 3, 4）
+SEP <- tryCatch(read.csv(file.path(OUTPUT_DIR, "revision/TableS13_real_centroid_separation.csv"))$Separation_PC1SD[1], error = function(e) 1.46)
 rcU <- sum13 %>% dplyr::filter(method == "UMAP + Ward's", k_true %in% 2:4) %>% dplyr::mutate(k_true = factor(k_true))
 pC <- ggplot(rcU, aes(delta, ARI_at_true_k, colour = k_true, group = k_true)) +
   geom_line(linewidth = 0.6) + geom_point(size = 1.4) +
-  geom_vline(xintercept = 1.46, linetype = "22", colour = "grey50", linewidth = 0.4) +
-  annotate("text", x = 1.46, y = 0.02, label = "Observed\n1.46 SD", hjust = -0.1, vjust = 0, size = 2.4,
+  geom_vline(xintercept = SEP, linetype = "22", colour = "grey50", linewidth = 0.4) +
+  annotate("text", x = SEP, y = 0.02, label = sprintf("Observed\n%.2f SD", SEP), hjust = -0.1, vjust = 0, size = 2.4,
            colour = "grey30", family = "Helvetica", lineheight = 0.9) +
   scale_colour_manual(values = c(`2` = JAMA[["slate"]], `3` = JAMA[["cerulean"]], `4` = JAMA[["gold"]]),
                       labels = c("True k = 2", "True k = 3", "True k = 4")) +

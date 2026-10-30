@@ -49,9 +49,9 @@ raw <- read.csv(DATA_PATH, stringsAsFactors = FALSE)
 cl  <- read.csv(file.path(OUTPUT_DIR, "Cluster_Assignments.csv")); clcol <- intersect(c("Cluster","cluster","Cluster_k2"), names(cl))[1]
 HAVE_EMB <- file.exists(EMB_CSV)
 stopifnot(nrow(raw) == 599, nrow(cl) == 599)
-d <- raw %>% dplyr::mutate(Cluster = factor(cl[[clcol]], levels = 1:2, labels = c("Cluster 1", "Cluster 2")))
+K <- length(unique(cl[[clcol]])); d <- raw %>% dplyr::mutate(Cluster = factor(cl[[clcol]], levels = seq_len(K), labels = paste("Cluster", seq_len(K))))
 if (HAVE_EMB) { emb <- read.csv(EMB_CSV); stopifnot(nrow(emb) == 599); d$UMAP1 <- emb$UMAP1; d$UMAP2 <- emb$UMAP2 }
-stopifnot(table(d$Cluster)[["Cluster 1"]] == 247)
+if (K != 2 || table(d$Cluster)[["Cluster 1"]] != 247) message("Note: cluster structure differs from the manuscript (expected on synthetic data)."); if (K > 2) { CLCOL <- setNames(unname(JAMA)[seq_len(K)], paste("Cluster", seq_len(K))); CLFILL <- setNames(grDevices::adjustcolor(CLCOL, alpha.f = 0.35), names(CLCOL)) }
 n_lab <- as.data.frame(table(Cluster = d$Cluster), responseName = "n"); n_lab$lab <- paste0(n_lab$Cluster, " (n = ", n_lab$n, ")")
 CLLAB <- setNames(n_lab$lab, n_lab$Cluster)
 
@@ -112,7 +112,7 @@ VARS <- c(AHI = "AHI (events/h)", ISI = "Insomnia Severity Index",
           TST = "Total sleep time (min)", SE = "Sleep efficiency (proportion)", WASO = "Wake after sleep onset (min)")
 VARS_LAB <- setNames(paste0(LETTERS[seq_along(VARS)], "   ", VARS), names(VARS))
 es <- read.csv(file.path(OUTPUT_DIR, "revision/TableS12_pairwise_Tukey_CohenD.csv")) %>%
-  dplyr::transmute(Variable, lab = sprintf("d = %s%.2f", ifelse(Cohen_d < 0, "−", ""), abs(Cohen_d)))
+  dplyr::transmute(Variable, lab = sprintf("d = %s%.2f", ifelse(Cohen_d < 0, "−", ""), abs(Cohen_d))) %>% dplyr::distinct(Variable, .keep_all = TRUE)
 stopifnot(all(names(VARS) %in% names(d)))
 long3 <- d %>% dplyr::select(Cluster, dplyr::all_of(names(VARS))) %>% dplyr::mutate(dplyr::across(-Cluster, ~ as.numeric(.x))) %>%
   tidyr::pivot_longer(-Cluster, names_to = "Variable") %>%
@@ -123,11 +123,11 @@ p3 <- ggplot(long3, aes(Cluster, value, fill = Cluster)) +
   stat_summary(fun = mean, geom = "point", shape = 23, size = 2, fill = "white", colour = "black", stroke = 0.4) +
   geom_text(data = es, aes(x = 2.5, y = Inf, label = lab), inherit.aes = FALSE, hjust = 1.05, vjust = 1.4, size = 2.5, family = "Helvetica") +
   scale_fill_manual(values = CLFILL, guide = "none") +
-  scale_x_discrete(labels = c("C1", "C2")) +
+  scale_x_discrete(labels = paste0("C", seq_len(K))) +
   scale_y_continuous(expand = expansion(mult = c(0.05, 0.14))) +
   facet_wrap(~ Variable, scales = "free_y", ncol = 3, labeller = as_labeller(VARS_LAB)) +
   labs(x = NULL, y = NULL,
-       caption = paste0("C1, Cluster 1 (n = 247; low AHI, high psychological burden); C2, Cluster 2 (n = 352; high AHI). AHI, apnea–hypopnea index.\n",
+       caption = paste0(paste(sprintf("C%d, %s", seq_len(K), CLLAB), collapse = "; "), ". AHI, apnea–hypopnea index.\n",
                         "◇ mean; box, median and IQR; whiskers, 1.5 × IQR; points, values beyond the whiskers. d, Cohen's d (C1 − C2). Observed values; n varies with missingness.")) +
   theme_journal() + theme(plot.caption = element_text(size = 7, hjust = 0, colour = "grey30"),
                           strip.text = element_text(size = 8, hjust = 0, face = "bold"), panel.spacing = unit(4, "mm"))

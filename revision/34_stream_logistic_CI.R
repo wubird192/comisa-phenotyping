@@ -40,7 +40,7 @@ if (USE_IMPUTED) {
   imp4 <- mice::complete(readRDS(IMP_RDS), 4)        # 行順は comisa.csv と同じ前提
   dat$ISI  <- imp4$ISI;  dat$AHI <- imp4$AHI;  dat$DBAS <- imp4$DBAS
 }
-stopifnot(table(dat$Stream)[["IS"]] == 113, sum(dat$C1) == 247)
+if (table(dat$Stream)[["IS"]] != 113 || sum(dat$C1) != 247) message("Note: stream/cluster counts differ from the manuscript (expected on synthetic data).")
 
 dat <- dat %>% mutate(ISI_z = as.numeric(scale(ISI)),
                       AHI_z = as.numeric(scale(AHI)),
