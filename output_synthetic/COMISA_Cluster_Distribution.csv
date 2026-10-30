@@ -1,0 +1,3 @@
+"Threshold","N_COMISA","N_in_C1","Pct_in_C1","CI_Lower","CI_Upper"
+"AHI >= 15",51,41,80.4,66.9,90.2
+"AHI >= 5",100,87,87,NA,NA

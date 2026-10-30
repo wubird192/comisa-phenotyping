@@ -1,53 +1,25 @@
-# History files
-.Rhistory
-.Rapp.history
-
-# Session Data files
-.RData
-.RDataTmp
-
-# User-specific files
-.Ruserdata
-
-# Example code in package build process
-*-Ex.R
-
-# Output files from R CMD build
-/*.tar.gz
-
-# Output files from R CMD check
-/*.Rcheck/
-
-# RStudio files
-.Rproj.user/
-
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
-
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
-.httr-oauth
-
-# knitr and R markdown default cache directories
-*_cache/
-/cache/
-
-# Temporary files created by R markdown
-*.utf8.md
-*.knit.md
-
-# R Environment Variables
-.Renviron
-
-# pkgdown site
-docs/
-
-# translation temp files
-po/*~
-
-# RStudio Connect folder
-rsconnect/
-
-# Restricted data and generated outputs (code-only public repo)
-data/
+# ---- never commit patient-level data or outputs ----
+comisa.csv
+*comisa*.xlsx
+*comisa*.xls
 output/
+output_old/
+output_backup*/
+revision/output/
+**/Cluster_Assignments.csv
+**/UMAP_Embedding_Final.csv
+**/mice_imputation.rds
+**/Consensus_Matrix.rds
+**/28_*cases*.csv
+**/clinic_query_list.csv
+**/personal_paths_hits.csv
+**/script_index.csv
+*.rds
+*.RData
+.Rhistory
+.Rproj.user/
+.DS_Store
+# ---- keep the synthetic data and its outputs ----
+!data/synthetic_comisa.csv
+!output_synthetic/
+!output_synthetic/**

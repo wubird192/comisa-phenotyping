@@ -1,0 +1,3 @@
+"Threshold","N_COMISA","AUC","CI_Lower","CI_Upper","DeLong_p"
+"AHI >= 15",51,0.715,0.656,0.774,0.091
+"AHI >= 5",100,0.776,0.737,0.815,NA
