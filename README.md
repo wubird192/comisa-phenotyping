@@ -142,7 +142,10 @@ The cohort comprises 597 patients from Gifu Mates Sleep Clinic and 2 from Iwata 
 
 | Column | Description |
 |---|---|
-| — | The entry stream is not a separate column: a recorded insomnia diagnosis (`Diagnosis` containing "不眠症") identifies the insomnia stream (n = 113); all other patients entered through the sleep-apnea stream (n = 486) |
+| `ID` | Row identifier (`SYN-001`… in the synthetic file; row number in the analysis file) |
+| `Stream` | Entry stream at triage: `IS` (insomnia service, n = 113) or `SAS` (sleep-apnea service, n = 486). Identical to the presence of a recorded insomnia diagnosis (`Diagnosis` = "不眠症"), which several scripts use instead |
+| `Site` | `G` (Gifu Mates Sleep Clinic, n = 597) or `I` (Iwata, n = 2) |
+| `Duration_Months`, `Duration_Certain` | Duration of insomnia recorded at the first visit (insomnia stream only; exploratory analysis) |
 | `Diagnosis` | Clinical diagnosis recorded at the first visit (Japanese text; "不眠症" = insomnia disorder) |
 | `AHI` | Apnea–hypopnea index (events/h) |
 | `ISI` | Insomnia Severity Index (0–28) |
@@ -159,7 +162,7 @@ The cohort comprises 597 patients from Gifu Mates Sleep Clinic and 2 from Iwata 
 | `ODI3` | 3% oxygen desaturation index (events/h) |
 | `Age` | Age (years) |
 | `BMI` | Body mass index (kg/m²) |
-| `Sex` | 女 (female) / 男 (male); descriptive analyses only, not a clustering variable |
+| `Sex` | 女 (female) / 男 (male); descriptive analyses only, not a clustering variable. **Not included in the synthetic dataset**, so `30_31_33_rewrite_v2.R` (sex tables) cannot be run on the synthetic data; its other two sections and all other scripts do not need it |
 | `PSG_Year` | Year of polysomnography; descriptive analyses only |
 
 The patient identifier in `Cluster_Assignments.csv` is the row number of the analysis file.
